@@ -9,7 +9,7 @@ export const APP_CONFIG = {
   BASE_URL: "https://yourdomain.com",
 
   // Social Links
-  TELEGRAM_CHANNEL: "https://t.me/onehunt",
+  TELEGRAM_CHANNEL: "https://t.me/cryptoairdropxton",
   TWITTER: "https://twitter.com/onehunt",
   WEBSITE: "https://onehunt.io",
 
