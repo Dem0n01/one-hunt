@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>One Hunt - Daily Rewards</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+    <!-- Main Container -->
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo-container">
+                <img src="assets/images/logo.png" alt="One Hunt Logo" class="logo">
+                <h1 class="brand-name">One Hunt</h1>
+            </div>
+            <div class="user-balance">
+                <span class="balance-label">Balance</span>
+                <span class="balance-amount" id="userBalance">0</span>
+                <span class="currency">🪙</span>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Home View -->
+            <div class="view active" id="homeView">
+                <!-- Stats Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">🎯</div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="tasksCompleted">0</span>
+                            <span class="stat-label">Tasks Done</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">⭐</div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="userLevel">1</span>
+                            <span class="stat-label">Level</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🔥</div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="userStreak">0</span>
+                            <span class="stat-label">Day Streak</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Daily Reward -->
+                <div class="section-card">
+                    <h2 class="section-title">Daily Reward</h2>
+                    <div class="daily-reward-box">
+                        <div class="reward-icon">🎁</div>
+                        <div class="reward-info">
+                            <h3>Claim Your Daily Reward!</h3>
+                            <p>Get <strong>20 coins</strong> for logging in today</p>
+                        </div>
+                        <button class="btn btn-primary" id="claimDailyBtn">Claim Now</button>
+                    </div>
+                </div>
+
+                <!-- Featured Tasks -->
+                <div class="section-card">
+                    <div class="section-header">
+                        <h2 class="section-title">Featured Tasks</h2>
+                        <a href="#" class="see-all-link" onclick="showView('tasksView')">See All</a>
+                    </div>
+                    <div class="tasks-list" id="featuredTasks">
+                        <!-- Tasks will be loaded here -->
+                        <div class="task-skeleton"></div>
+                        <div class="task-skeleton"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tasks View -->
+            <div class="view" id="tasksView">
+                <h2 class="page-title">All Tasks</h2>
+                <div class="tasks-filter">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="daily">Daily</button>
+                    <button class="filter-btn" data-filter="weekly">Weekly</button>
+                    <button class="filter-btn" data-filter="special">Special</button>
+                </div>
+                <div class="tasks-list" id="allTasks">
+                    <!-- Tasks will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Rewards View -->
+            <div class="view" id="rewardsView">
+                <h2 class="page-title">Rewards & Prizes</h2>
+                
+                <!-- Spin Wheel -->
+                <div class="section-card">
+                    <h3 class="section-title">Spin the Wheel</h3>
+                    <div class="spin-container">
+                        <div class="wheel-display">
+                            <div class="wheel-icon">🎰</div>
+                            <p>Try your luck!</p>
+                        </div>
+                        <button class="btn btn-accent" id="spinWheelBtn">Spin Now (50 coins)</button>
+                    </div>
+                </div>
+
+                <!-- Reward History -->
+                <div class="section-card">
+                    <h3 class="section-title">Recent Rewards</h3>
+                    <div id="rewardHistory">
+                        <p class="empty-state">No rewards yet. Complete tasks to earn!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Leaderboard View -->
+            <div class="view" id="leaderboardView">
+                <h2 class="page-title">Leaderboard</h2>
+                <div class="leaderboard-tabs">
+                    <button class="tab-btn active" data-tab="balance">Top Earners</button>
+                    <button class="tab-btn" data-tab="level">Top Levels</button>
+                    <button class="tab-btn" data-tab="referrals">Top Referrers</button>
+                </div>
+                <div class="leaderboard-list" id="leaderboardList">
+                    <!-- Leaderboard items will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Profile View -->
+            <div class="view" id="profileView">
+                <h2 class="page-title">My Profile</h2>
+                
+                <!-- User Info Card -->
+                <div class="profile-card">
+                    <div class="profile-avatar">
+                        <div class="avatar-circle">
+                            <span class="avatar-initial" id="userInitial">?</span>
+                        </div>
+                    </div>
+                    <h3 class="profile-name" id="userName">Loading...</h3>
+                    <p class="profile-username" id="userUsername">@username</p>
+                    
+                    <div class="profile-stats">
+                        <div class="profile-stat">
+                            <span class="stat-number" id="profileBalance">0</span>
+                            <span class="stat-text">Coins</span>
+                        </div>
+                        <div class="profile-stat">
+                            <span class="stat-number" id="profileLevel">1</span>
+                            <span class="stat-text">Level</span>
+                        </div>
+                        <div class="profile-stat">
+                            <span class="stat-number" id="profileReferrals">0</span>
+                            <span class="stat-text">Referrals</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Referral Section -->
+                <div class="section-card">
+                    <h3 class="section-title">Invite Friends</h3>
+                    <p class="section-desc">Earn <strong>100 coins</strong> for each friend you refer!</p>
+                    <div class="referral-link-box">
+                        <input type="text" class="referral-input" id="referralLink" readonly value="Loading...">
+                        <button class="btn btn-sm btn-primary" id="copyLinkBtn">Copy</button>
+                    </div>
+                    <button class="btn btn-accent btn-block" id="shareBtn">Share Link</button>
+                </div>
+
+                <!-- Achievements -->
+                <div class="section-card">
+                    <h3 class="section-title">Achievements</h3>
+                    <div class="achievements-grid" id="achievementsList">
+                        <!-- Achievements will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <button class="nav-item active" data-view="homeView">
+                <span class="nav-icon">🏠</span>
+                <span class="nav-label">Home</span>
+            </button>
+            <button class="nav-item" data-view="tasksView">
+                <span class="nav-icon">✅</span>
+                <span class="nav-label">Tasks</span>
+            </button>
+            <button class="nav-item" data-view="rewardsView">
+                <span class="nav-icon">🎁</span>
+                <span class="nav-label">Rewards</span>
+            </button>
+            <button class="nav-item" data-view="leaderboardView">
+                <span class="nav-icon">🏆</span>
+                <span class="nav-label">Leaders</span>
+            </button>
+            <button class="nav-item" data-view="profileView">
+                <span class="nav-icon">👤</span>
+                <span class="nav-label">Profile</span>
+            </button>
+        </nav>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
+    <script src="app.js" type="module"></script>
+</body>
+</html>
